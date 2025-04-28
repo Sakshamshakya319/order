@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Order</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <form action="/create" method="POST">
+  <div class="form-group">
+    <label for="itemName">Item Name:</label>
+    <input type="text" id="itemName" name="itemName" required>
+  </div>
+  
+  <div class="form-group">
+    <label for="itemPrice">Item Price:</label>
+    <input type="number" id="itemPrice" name="itemPrice" step="0.01" min="0" required>
+  </div>
+  
+  <div class="form-group">
+    <label for="unitsBought">Units Bought:</label>
+    <input type="number" id="unitsBought" name="unitsBought" min="1" required>
+  </div>
+  
+  <div class="form-group">
+    <label for="payableAmount">Payable Amount:</label>
+    <input type="number" id="payableAmount" step="0.01" readonly>
+    <small>(This will be calculated automatically)</small>
+  </div>
+  
+  <button type="submit">Create Order</button>
+</form>
+
+<script>
+  // Calculate payable amount automatically
+  document.getElementById('itemPrice').addEventListener('input', calculateTotal);
+  document.getElementById('unitsBought').addEventListener('input', calculateTotal);
+  
+  function calculateTotal() {
+    const price = parseFloat(document.getElementById('itemPrice').value) || 0;
+    const units = parseInt(document.getElementById('unitsBought').value) || 0;
+    const total = price * units;
+    document.getElementById('payableAmount').value = total.toFixed(2);
+  }
+</script>
+</body>
+</html>
